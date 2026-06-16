@@ -6,6 +6,13 @@ from recognizer import DollarRecognizer, Point
 # constants
 MIN_STROKE_LENGTH = 10
 SCORE_THRESHOLD = 0.5
+REQUIRED_GESTURES = {
+    "rectangle",
+    "circle",
+    "check",
+    "delete",
+    "pigtail",
+}  # filter only these 5 gestures as required by task 1
 
 # variables
 current_stroke = []
@@ -31,7 +38,9 @@ result_label = pyglet.text.Label(
 gestures_title = pyglet.text.Label(
     "Available gestures:", x=800, y=560, color=(200, 200, 200, 255), font_size=16
 )
-
+recognizer.Unistrokes = [
+    u for u in recognizer.Unistrokes if u.name in REQUIRED_GESTURES
+]
 gesture_names = [u.name for u in recognizer.Unistrokes]
 gesture_labels = [
     pyglet.text.Label(
@@ -40,7 +49,6 @@ gesture_labels = [
     for i, name in enumerate(gesture_names)
 ]
 
-# commands
 commands_label = pyglet.text.Label(
     "Commands: [C] clear stroke | [Q] or [ESC] quit",
     x=15,
@@ -81,7 +89,7 @@ def on_mouse_drag(x, y, dx, dy, buttons, modifiers):
 @window.event
 def on_mouse_release(x, y, button, modifiers):
     if len(current_stroke) > 10:
-        # transform the points to top-left Y coordinates for the recognizer (pyglet handles them in reverse)
+        # transform the points to top-left Y coordinates for the recognizer 
         processed_stroke = [Point(p.x, window.height - p.y) for p in current_stroke]
 
         # pass the processed stroke
