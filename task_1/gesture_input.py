@@ -1,9 +1,14 @@
 # gesture input program for first task
 
 import pyglet
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from recognizer import DollarRecognizer, Point
 
 # constants
+WINDOW_WIDTH = 1100
+WINDOW_HEIGHT = 600
 MIN_STROKE_LENGTH = 10
 SCORE_THRESHOLD = 0.5
 REQUIRED_GESTURES = {
@@ -18,7 +23,7 @@ REQUIRED_GESTURES = {
 current_stroke = []
 
 # setup
-window = pyglet.window.Window(1100, 600, caption="$1 Gesture Recognizer")
+window = pyglet.window.Window(WINDOW_WIDTH, WINDOW_HEIGHT, caption="$1 Gesture Recognizer")
 recognizer = DollarRecognizer()
 
 # sprite
