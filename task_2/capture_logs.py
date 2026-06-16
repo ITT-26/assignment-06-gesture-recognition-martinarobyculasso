@@ -1,4 +1,8 @@
 # this is a helper script to capture my own logs and test the LSTM from task 2
+# saved in "datasets" folder, one level up
+
+# Note: this script was written for personal use during data capture, so it intentionally lacks
+# features like selecting a specific gesture to redo or discarding a bad sample mid-session.
 
 import pyglet
 import time
@@ -26,8 +30,8 @@ OUTPUT_DIR = os.path.join(SCRIPT_DIR, "..", "datasets")
 
 # state
 current_gesture_index = 0
-current_rep = 1  # 1-indexed, matches Wobbrock's "01", "02", etc.
-current_stroke = []  # list of (Point, timestamp_ms)
+current_rep = 1  # index
+current_stroke = []  
 stroke_start_time = None
 
 window = pyglet.window.Window(800, 600, caption="Gesture Capture")
@@ -140,3 +144,4 @@ def on_draw():
 
 update_labels()
 pyglet.app.run()
+

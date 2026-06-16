@@ -17,16 +17,18 @@ REQUIRED_GESTURES = {
     "check",
     "delete",
     "pigtail",
-}  # filter only these 5 gestures as required by task 1
+}  # filter only these 5 gestures (as required in task 1)
 
 # variables
 current_stroke = []
 
-# setup
+# window setup
 window = pyglet.window.Window(WINDOW_WIDTH, WINDOW_HEIGHT, caption="$1 Gesture Recognizer")
+
+# recognizer
 recognizer = DollarRecognizer()
 
-# sprite
+# sprite to include drawing references
 gesture_reference = pyglet.image.load("gesture_reference.png")
 gesture_sprite = pyglet.sprite.Sprite(gesture_reference, x=800, y=150)
 gesture_sprite.scale = 0.4
@@ -97,7 +99,7 @@ def on_mouse_release(x, y, button, modifiers):
         # transform the points to top-left Y coordinates for the recognizer 
         processed_stroke = [Point(p.x, window.height - p.y) for p in current_stroke]
 
-        # pass the processed stroke
+        # pass the processed stroke to the recognizer
         result = recognizer.Recognize(processed_stroke, True)
 
         if result.score >= SCORE_THRESHOLD:

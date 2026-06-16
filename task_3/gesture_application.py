@@ -9,7 +9,9 @@ import random
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from recognizer import DollarRecognizer, Point
 
-# constants
+
+# CONSTANTS =======
+
 WINDOW_WIDTH = 1100
 WINDOW_HEIGHT = 600
 DANGER_LINE_X = 100
@@ -34,7 +36,9 @@ REQUIRED_GESTURES = {
     "caret",
 }  # filter only these 3 gestures
 
-# variables
+
+# VARIABLES =======
+
 current_stroke = []
 game_state = "start_screen"  # "start_screen", "playing", "game_over", "freeze"
 ghost_list = []
@@ -86,6 +90,7 @@ heart_3 = pyglet.sprite.Sprite(
     heart_full_img, x=WINDOW_WIDTH - 40, y=WINDOW_HEIGHT - 40
 )
 heart_3.scale = HEART_SCALE
+
 
 # LABELS =======
 
@@ -195,6 +200,7 @@ restart_prompt_label = pyglet.text.Label(
     anchor_x="center",
     anchor_y="center",
 )
+
 
 # CLASSES =======
 
