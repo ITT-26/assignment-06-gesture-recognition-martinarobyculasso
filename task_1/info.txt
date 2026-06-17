@@ -1,0 +1,53 @@
+TASK 1 - $1 GESTURE RECOGNIZER + GESTURE INPUT INTERFACE
+========================================================
+
+Implementation of Wobbrock et al.'s $1 unistroke gesture recognizer, ported
+from the original JavaScript implementation to Python, together with a
+pyglet-based interface for drawing gestures with the mouse/touchpad and
+testing the recognizer in real time. The interface is restricted to the
+five gestures required for this task: rectangle, circle, check, delete,
+and pigtail.
+
+FILES
+=====
+
+recognizer.py
+-------------
+Python port of Wobbrock et al.'s $1 gesture recognizer. 
+
+gesture_input.py
+-----------------
+Pyglet application for task 1. Lets the user draw a gesture with the
+mouse/touchpad, filters the recognizer's templates down to the five
+required gestures, and displays the recognized gesture, its score, and
+the prediction time on screen.
+
+gesture_reference.png
+----------------------
+Reference image shown in the interface so the user knows how to draw each
+of the five required gestures.
+
+AI USAGE (Claude - Anthropic)
+==============================
+As required by the assignment, Claude was not used to implement the
+gesture recognition algorithm itself; the $1 recognizer logic was
+understood and written by hand, following Wobbrock et al.'s JS file.
+Outside of that, specific areas where Claude provided help:
+
+- Understanding some JavaScript syntax, since I had never used the
+  language before, while porting the original $1 recognizer
+  implementation to Python.
+- "Translating" the 16 unistroke templates' point data from JavaScript
+  array syntax to Python lists.
+- Fixing a mismatch between pyglet's coordinate system and the one
+  expected by the recognizer, in gesture_input.py.
+- Writing this info.txt file.
+
+REFERENCES
+==========
+- Wobbrock, J.O., Wilson, A.D. and Li, Y. (2007). Gestures without
+  libraries, toolkits or training: A $1 recognizer for user interface
+  prototypes. Proceedings of UIST '07, pp. 159-168.
+  https://dl.acm.org/citation.cfm?id=1294238
+- $1 Unistroke Recognizer, original JavaScript implementation:
+  https://depts.washington.edu/acelab/proj/dollar/index.html

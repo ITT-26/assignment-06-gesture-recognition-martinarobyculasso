@@ -51,11 +51,16 @@ class Rectangle:
 class Unistroke:
     def __init__(self, name, points):
         self.name = name
+        # resample so that we get the same number of points for the stroke, independent of drawing speed
         self.points = Resample(points, NUM_POINTS)
+        # make it independent from rotation
         radians = IndicativeAngle(self.points)
         self.points = RotateBy(self.points, -radians)
+        # make it independent from size
         self.points = ScaleTo(self.points, SQUARE_SIZE)
+        # make it independent from the position where it was drawn
         self.points = TranslateTo(self.points, ORIGIN)
+        # protractor
         self.vector = Vectorize(self.points)
 
 
@@ -77,7 +82,7 @@ ORIGIN = Point(0, 0)
 class DollarRecognizer:
     def __init__(self):
         # Note: I used AI for "translating" the templates. I started by only adding the ones mentioned for task 1, but then decided
-        # to include all of them because I thought they would be useful for tasks 2 and 3 
+        # to include all of them because I thought they would be useful for tasks 2 and 3
         # (and then I formatted the code inside VSCode to follow Python conventions, that's why this part takes up so many lines)
         self.Unistrokes = [None] * 16
         self.Unistrokes[0] = Unistroke(
@@ -1104,10 +1109,10 @@ class DollarRecognizer:
 
     def Recognize(self, points, useProtractor):
         t0 = time.time()
-        candidate = Unistroke("", points)
+        candidate = Unistroke("", points)  # pre-process new data
 
         u = -1
-        b = math.inf
+        b = math.inf  # track best min distance
 
         for i in range(0, len(self.Unistrokes)):
             if useProtractor:
@@ -1123,13 +1128,14 @@ class DollarRecognizer:
 
             if d < b:
                 b = d
-                u = i
+                u = i  # index of the closest matching template
 
         t1 = time.time()
 
         if u == -1:
             result = Result("No match.", 0.0, t1 - t0)
         else:
+            # calculate score (changes if Protractor method is used)
             score = (1.0 - b) if useProtractor else (1.0 - b / HALF_DIAGONAL)
             result = Result(self.Unistrokes[u].name, score, t1 - t0)
 
@@ -1154,28 +1160,41 @@ class DollarRecognizer:
 # FUNCTIONS ===
 
 
-# we can't use a regular "for i in range(len(points))" because the length of points can change inside the loop
+# basically what this does is normalize the gesture to the same number of points,
+# distributed evenly along the drawn stroke
+# otherwise we would have more points where the drawing was made slower, and less
+# points where it was made faster
 def Resample(points, n):
-    I = PathLength(points) / (n - 1)
+    I = PathLength(points) / (n - 1)  # distance that should separate each point
     D = 0.0
     newpoints = [points[0]]
     i = 1
     temp_len = len(points)
 
-    while i < temp_len:
+    while (
+        i < temp_len
+    ):  # we can't use a regular "for i in range(len(points))" because the length of points can change inside the loop
         d = Distance(points[i - 1], points[i])
+        # d -> length of the segment between two consecutive points
+        # D -> accumulator, keeps track of travelled distance since a point was added to newpoints
+
+        # if the travelled distance + the length of the current segment is greater than or equal to I,
+        # we find a point 'q' that is exactly the remaining distance (I - D) away from the previous point along the current segment
+        # by inserting 'q' back into the original list, it serves as the starting point for checking the remainder of this segment in the next iteration
         if D + d >= I:
             qx = points[i - 1].x + ((I - D) / d) * (points[i].x - points[i - 1].x)
             qy = points[i - 1].y + ((I - D) / d) * (points[i].y - points[i - 1].y)
             q = Point(qx, qy)
             newpoints.append(q)
             points.insert(i, q)
-            D = 0.0
+            D = 0.0  # since a new point is added, reset D
+        # if D + d is smaller than I, add d to the accumulator
         else:
             D += d
         i += 1
         temp_len = len(points)
 
+    # if the length of newpoints is n-1 due to skipping a point because of round-off errors, add the last point for it to be equal to n
     if len(newpoints) == n - 1:
         qx_temp = points[-1].x
         qy_temp = points[-1].y
@@ -1184,13 +1203,13 @@ def Resample(points, n):
 
     return newpoints
 
-
+# finds the angle of the line that connects the first sampled point and the centroid of the drawn gesture
 def IndicativeAngle(points):
     c = Centroid(points)
 
     return math.atan2(c.y - points[0].y, c.x - points[0].x)
 
-
+# spins the drawing around its center point
 def RotateBy(points, radians):
     c = Centroid(points)
     cos = math.cos(radians)
@@ -1204,7 +1223,7 @@ def RotateBy(points, radians):
 
     return newpoints
 
-
+# makes drawing fit inside a bounding square
 def ScaleTo(points, size):
     B = BoundingBox(points)
     newpoints = []
@@ -1216,7 +1235,7 @@ def ScaleTo(points, size):
 
     return newpoints
 
-
+# moves the drawing so that the center point is placed on a target coord.
 def TranslateTo(points, pt):
     c = Centroid(points)
     newpoints = []
@@ -1228,7 +1247,7 @@ def TranslateTo(points, pt):
 
     return newpoints
 
-
+# flattens x and y to one dimension, used for protractor
 def Vectorize(points):
     sum = 0.0
     vector = []
@@ -1281,12 +1300,13 @@ def DistanceAtBestAngle(points, T, a, b, threshold):
     return min(f1, f2)
 
 
+# rotates an incoming drawing, measures average point to point distance against templates
 def DistanceAtAngle(points, T, radians):
     newpoints = RotateBy(points, radians)
 
     return PathDistance(newpoints, T.points)
 
-
+# calculates centroid
 def Centroid(points):
     x = 0.0
     y = 0.0
@@ -1300,7 +1320,7 @@ def Centroid(points):
 
     return Point(x, y)
 
-
+# finds area that encloses drawing
 def BoundingBox(points):
     minX = math.inf
     maxX = -math.inf

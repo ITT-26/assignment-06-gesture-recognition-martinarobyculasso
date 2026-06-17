@@ -1,8 +1,9 @@
 # this is a helper script to capture my own logs and test the LSTM from task 2
 # saved in "datasets" folder, one level up
 
-# Note: this script was written for personal use during data capture, so it intentionally lacks
-# features like selecting a specific gesture to redo or discarding a bad sample mid-session.
+# Note: this script was written for personal use during data capture, so it lacks
+# features like being able to select a specific gesture to redo or discarding a bad sample 
+# mid-session if for some reason a mistake was made
 
 import pyglet
 import time

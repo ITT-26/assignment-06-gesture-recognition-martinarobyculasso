@@ -1,0 +1,50 @@
+TASK 3 - GESTURE DETECTION GAME
+===============================
+
+"Ghost Buster": a small pyglet game controlled with three unistroke
+gestures (rectangle, pigtail, caret), built on top of task_1's $1
+recognizer, with some of the game-state logic reused from Assignment
+01 ("Fishy").
+
+FILES
+=====
+
+gesture_application.py
+------------------------
+The game itself. Reuses the DollarRecognizer and Point classes from
+task_1/recognizer.py. Ghosts of three types (rectangle, pigtail,
+caret) spawn on the right side of the screen and drift left; drawing
+the matching gesture inside a fixed drawing zone banishes the closest
+ghost of that type and adds a point. Letting a ghost cross the red
+"danger line" near the left edge costs one of three lives; losing all
+lives ends the game and shows the final score.
+
+ASSETS
+======
+- ghost_caret.png, ghost_dead.png, ghost_evil.png, ghost_pigtail.png,
+  ghost_rectangle.png, title_ghosts.png: drawn by hand for this
+  assignment (title_ghosts.png is a compilation of the other ghost
+  sprites, used as the gesture reference image on the start screen).
+- heart_full.png, heart_empty.png: from Kenney's Pixel Platformer asset
+  pack (https://kenney.nl/assets/pixel-platformer), CC0 (Public Domain).
+- background.jpg: found on Pinterest, couldn't find author.
+- ChelseaMarket-Regular.ttf: Chelsea Market font, from Google Fonts
+  (https://fonts.google.com/specimen/Chelsea+Market).
+
+
+AI USAGE (Claude - Anthropic)
+==============================
+Specific areas where Claude provided help:
+
+- Some parts of the game's design, such as setting up the drawing
+  area (the draw zone panel and the in_draw_zone() check).
+- The logic to kill the closest matching ghost (kill_closest_ghost()).
+- Writing this info.txt file.
+
+REFERENCES
+==========
+- Pixel Platformer asset pack, Kenney (heart sprites):
+  https://kenney.nl/assets/pixel-platformer
+  License: Creative Commons CC0 (Public Domain)
+- Chelsea Market font, Google Fonts:
+  https://fonts.google.com/specimen/Chelsea+Market

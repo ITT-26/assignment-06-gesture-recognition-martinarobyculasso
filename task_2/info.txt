@@ -1,0 +1,56 @@
+TASK 2 - COMPARING GESTURE RECOGNIZERS
+======================================
+
+Builds a custom test dataset of unistroke gestures, trains five LSTM
+classifiers of decreasing size on Wobbrock et al.'s unistroke gesture
+logs, and compares their parameter count, accuracy, and prediction time
+against my own captured test data. Results and discussion are reported
+in unistroke_gestures.ipynb, as required by the assignment.
+
+FILES
+=====
+
+capture_logs.py
+----------------
+Pyglet script used to capture my own gesture samples for the test set
+
+unistroke_gestures.ipynb
+-------------------------
+Main notebook for this task.
+
+IMPORTANT: My own gesture sample logs are stored in the datasets folder (sibling folder of task_2).
+
+NOTES
+=====
+- Wobbrock's logs dataset includes "question_mark" as one of its 16
+  gesture classes, while the $1 recognizer's templates (task_1/
+  recognizer.py) use "zig_zag" instead. question_mark samples were
+  still captured and used to train the LSTM, but this class will need
+  to be excluded if the LSTM is ever compared against the $1 recognizer.
+- capture_logs.py was written for personal, one-off use during data
+  capture. It lacks features like redoing a specific gesture or
+  discarding a bad sample mid-session, since that wasn't required by
+  the assignment.
+- The comparison between the LSTM models and the $1 gesture recognizer
+  (also required by the assignment) is missing due to lack of time.
+
+AI USAGE (Claude - Anthropic)
+==============================
+Specific areas where Claude provided help:
+
+- Adapting some of task_1's code for capture_logs.py.
+- Coding the load_xml_samples() function in the notebook, which parses
+  the gesture XML logs, normalizes the points, and resamples them to a
+  fixed length (flagged with a disclaimer in the notebook itself).
+- Polishing the look of the plots (training curves, confusion matrices,
+  and the parameter count vs. accuracy/prediction time comparison).
+- Writing this info.txt file.
+
+REFERENCES
+==========
+- LSTM demo notebook provided in class, used as the baseline for the models.
+- Wobbrock, J.O., Wilson, A.D. and Li, Y. (2007). Gestures without
+  libraries, toolkits or training: A $1 recognizer for user interface
+  prototypes. Proceedings of UIST '07, pp. 159-168.
+  https://dl.acm.org/citation.cfm?id=1294238
+
