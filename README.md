@@ -49,7 +49,7 @@ cd task_2
 python capture_logs.py
 ```
 
-Captured samples are saved to the datasets/ folder (one level up), as XML files in the same format as Wobbrock's original gesture logs.
+Captured samples are saved to the `datasets/` folder (one level up), as XML files in the same format as Wobbrock's original gesture logs.
 
 (If you want to retrain the models)
 
