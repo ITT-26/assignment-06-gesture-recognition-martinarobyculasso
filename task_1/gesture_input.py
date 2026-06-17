@@ -1,9 +1,6 @@
 # gesture input program for first task
 
 import pyglet
-import os
-import sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from recognizer import DollarRecognizer, Point
 
 # constants

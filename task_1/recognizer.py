@@ -76,8 +76,9 @@ ORIGIN = Point(0, 0)
 
 class DollarRecognizer:
     def __init__(self):
-        # Note: I used AI for "translating" the Unistrokes array - but only for this 
-        # (and then formatted the code inside VSCode to follow Python conventions, that's why this part takes up so many lines)
+        # Note: I used AI for "translating" the templates. I started by only adding the ones mentioned for task 1, but then decided
+        # to include all of them because I thought they would be useful for tasks 2 and 3 
+        # (and then I formatted the code inside VSCode to follow Python conventions, that's why this part takes up so many lines)
         self.Unistrokes = [None] * 16
         self.Unistrokes[0] = Unistroke(
             "triangle",

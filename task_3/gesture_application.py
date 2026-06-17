@@ -6,7 +6,9 @@ import sys
 import os
 import random
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+current_dir = os.path.dirname(os.path.abspath(__file__))
+task_1_dir = os.path.join(os.path.dirname(current_dir), 'task_1')
+sys.path.append(task_1_dir)
 from recognizer import DollarRecognizer, Point
 
 
