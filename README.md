@@ -25,7 +25,7 @@ pip install -r requirements.txt
 
 ## Task 1 - Implementing the $1 Gesture Recognizer
 
-A Python port of Wobbrock et al.'s $1 unistroke gesture recognizer, with a pyglet interface to draw and test five gestures (rectangle, circle, check, delete, pigtail) live.
+A Python version of Wobbrock et al.'s $1 unistroke gesture recognizer (`recognizer.py`), with a pyglet interface (`gesture_input.py`) to draw and test five gestures (rectangle, circle, check, delete, pigtail) live.
 
 **Usage:**
 
@@ -38,7 +38,7 @@ python gesture_input.py
 
 ## Task 2 - Comparing Gesture Recognizers
 
-Trains five LSTM classifiers of decreasing size on Wobbrock et al.'s gesture logs, then evaluates them on a custom test set captured with `capture_logs.py`. Results and discussion are in `unistroke_gestures.ipynb`.
+Trains five LSTM classifiers of decreasing size on Wobbrock et al.'s gesture logs, then evaluates them on a custom test set captured with `capture_logs.py`. Captured samples are saved to the `datasets/` folder (one level up), as XML files in the same format as Wobbrock's original gesture logs. Results and discussion are in `unistroke_gestures.ipynb`.
 
 **Usage:**
 
@@ -48,8 +48,6 @@ Trains five LSTM classifiers of decreasing size on Wobbrock et al.'s gesture log
 cd task_2
 python capture_logs.py
 ```
-
-Captured samples are saved to the `datasets/` folder (one level up), as XML files in the same format as Wobbrock's original gesture logs.
 
 (If you want to retrain the models)
 
